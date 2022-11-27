@@ -8,8 +8,11 @@ correctamente. Tenga en cuenta datos faltantes y duplicados.
 """
 import pandas as pd
 from datetime import datetime
+import re
 def clean_data():
     df = pd.read_csv("solicitudes_credito.csv", sep=";")
+    df.dropna(axis = 0, inplace = True)
+    df.drop_duplicates(inplace = True)
     df['monto_del_credito']=df['monto_del_credito'].str.replace("\$[\s*]", "")
     df['monto_del_credito']=df['monto_del_credito'].str.replace(",", "")
     df['monto_del_credito']=df['monto_del_credito'].str.replace("\.00", "")
@@ -20,6 +23,4 @@ def clean_data():
         df[i] = df[i].str.lower()
         df[i] = df[i].apply(lambda x: x.replace('_', ' '))
         df[i] = df[i].apply(lambda x: x.replace('-', ' '))
-    df.dropna(axis = 0, inplace = True)
-    df.drop_duplicates(inplace = True)
     return df
