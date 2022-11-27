@@ -9,6 +9,7 @@ correctamente. Tenga en cuenta datos faltantes y duplicados.
 import pandas as pd
 from datetime import datetime
 import re
+
 def clean_data():
     df = pd.read_csv("solicitudes_credito.csv", sep=";")
     df.dropna(axis = 0, inplace = True)
@@ -23,4 +24,5 @@ def clean_data():
         df[i] = df[i].str.lower()
         df[i] = df[i].apply(lambda x: x.replace('_', ' '))
         df[i] = df[i].apply(lambda x: x.replace('-', ' '))
+    df.drop_duplicates(inplace = True)
     return df
